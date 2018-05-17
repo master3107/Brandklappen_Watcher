@@ -1,19 +1,25 @@
-<!doctype html>
+﻿<!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
 <title>Brandklappe 1</title>
 </head>
 <style type="text/css">
- .examplediv
+ .tabelle-colour
  {
   background-color:#efefef;
   border-style:solid #000000 1px;
  }
-#divid
+#Tabelle
 {
  position:absolute;
- left:10px; top:250px; width:1100px; height:400px;
+ left:10px; top:250px; width:400px; height:600px;
+ overflow:auto;
+}
+#Tabelle2
+{
+ position:absolute;
+ left:200px; top:0px; width:400px; height:600px;
  overflow:auto;
 }
 
@@ -72,31 +78,28 @@
  </button>
 </form>
 
-<form action="Daten_schreiben.php">
- <label for="Ausschalten"></label>
- <button class="bonbon gruen">
-   Ausschalten !!
- </button>
-</form>
-</body>
-	
-<body>
+<a href="Daten_schreiben.php" target="frame">Update</a>
+<iframe src="about:blank" name="frame" height="0" width="0" frameborder="10"></iframe>
+
+
+<div id="Tabelle" class="tabelle-colour">
 
 <?php
 
+
 // Konfiguration
-$csvFile = "E:\MBWatcher_dev\Source\mb_daten\Slave1FC2";
+$csvFile1 = "/home/odroid/Documents/MBWatcher_dev/Source/mb_daten/Slave1FC2";
 $firstRowHeader = true;
-$maxRows = 10;
+$maxRows = 200;
  
 // Daten auslesen und Tabelle generieren
-$handle = fopen($csvFile, "r");
+$handle = fopen($csvFile1, "r");
 $counter = 0;
-echo "<table align=top border=8 cellpadding=12 border width=100% height=50 class=\"csvTable\">";
+echo "<table align=top border=8 cellpadding=12 border width=40% height=50 class=\"csvTable\">";
 
-echo "<h1 align=center>Status Brandmeldeklappe 1</h1>";
+echo "<h1 align=left>Ausgänge</h1>";
 
-while(($data = fgetcsv($handle, 999, ",")) && ($counter < $maxRows)) 
+while(($data = fgetcsv($handle, 999, ";")) && ($counter < $maxRows)) 
   
 {
  
@@ -108,35 +111,66 @@ while(($data = fgetcsv($handle, 999, ",")) && ($counter < $maxRows))
     
     echo "<th align=left>".$data[0]."</th>";
     echo "<th align=left>".$data[1]."</th>";
-    echo "<th align=left>".$data[2]."</th>";
-    echo "<th align=left>".$data[3]."</th>";
-    echo "<th align=left>".$data[4]."</th>";
-    echo "<th align=left>".$data[5]."</th>";
-    echo "<th align=left>".$data[6]."</th>";
-    echo "<th align=left>".$data[7]."</th>";
-    echo "<th align=left>".$data[8]."</th>";
-    echo "<th align=left>".$data[9]."</th>";
+    
   }
   else 
   {
     echo "<td>".$data[0]."</td>";
     echo "<td>".$data[1]."</td>";
-    echo "<td>".$data[2]."</td>";
-    echo "<td>".$data[3]."</td>";
-    echo "<td>".$data[4]."</td>";
-    echo "<td>".$data[5]."</td>";
-    echo "<td>".$data[6]."</td>";
-    echo "<td>".$data[7]."</td>";
-    echo "<td>".$data[8]."</td>";
-    echo "<td>".$data[9]."</td>";
+
   }
   echo "</tr>";
   echo "</tr>";
  
   $counter++;
 }
-echo "</table>"; 
-?>   
+echo "</table>";
+
+?>
+
+<div id="Tabelle2" class="tabelle-colour">
+
+<?php
+  
+$csvFile2 = "/home/odroid/Documents/MBWatcher_dev/Source/mb_daten/Slave6FC2";
+$firstRowHeader = true;
+$maxRows = 200;
+
+
+$handle = fopen($csvFile2, "r");
+$counter = 0;
+echo "<table align=top border=8 cellpadding=12 border width=40% height=50 class=\"csvTable\">";
+
+echo "<h1 align=left>Eingänge</h1>";
+
+while(($data = fgetcsv($handle, 999, ";")) && ($counter < $maxRows)) 
+  
+{
+ 
+  echo "<tr>";
+  echo "<tr>";
+
+  if(($counter == 0) && $firstRowHeader) 
+  {
+    
+    echo "<th align=left>".$data[0]."</th>";
+    echo "<th align=left>".$data[1]."</th>";
+    
+  }
+  else 
+  {
+    echo "<td>".$data[0]."</td>";
+    echo "<td>".$data[1]."</td>";
+
+  }
+  echo "</tr>";
+  echo "</tr>";
+ 
+  $counter++;
+}
+echo "</table>";
+ 
+?> 
 
 
 

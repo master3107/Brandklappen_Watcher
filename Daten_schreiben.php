@@ -1,11 +1,11 @@
 <?php
-$list = array('101','Abby', 'Gale', '310782', 'Magdeburg','Marx.Street 12');
+$list = array('00226;0');
     
 
 // Konfiguration
-$csvFile = "daten.csv";
+$csvFile = "/home/odroid/Documents/MBWatcher_dev/Source/mb_daten/Slave1FC2";
 $firstRowHeader = true;
-$maxRows = 200;
+$maxRows = 300;
  
 // Daten schreiben
 $handle = fopen($csvFile, "a+");
