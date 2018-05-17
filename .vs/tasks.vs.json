@@ -1,0 +1,10 @@
+{
+  "version": "0.2.1",
+  "tasks": [
+    {
+      "taskName": "Task-Brandklappe1",
+      "appliesTo": "Brandklappe1.php",
+      "type": "launch"
+    }
+  ]
+}
