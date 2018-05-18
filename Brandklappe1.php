@@ -14,68 +14,22 @@
 {
  position:absolute;
  left:10px; top:250px; width:400px; height:600px;
- overflow:auto;
+
 }
 #Tabelle2
 {
  position:absolute;
  left:200px; top:0px; width:400px; height:600px;
- overflow:auto;
+ 
 }
 
-.bonbon {
-	width: 200px;
-	height: 60px;
-	background: yellow;
-	
-	
-	background: linear-gradient(to bottom, white, yellow);
-	box-shadow: inset 0px 0px 6px #fff, inset 0px -1px 6px #fff;
-	border: 1px solid #5ea617;
-	border-radius: 1em;
-	margin: 1em;
-}
-
-.bonbon.rot {
-	background: linear-gradient(to bottom, white, red);
-}
-
-.bonbon.orange {
-	background: linear-gradient(to bottom, white, orange);
-}
-
-.bonbon.gruen {
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, greenyellow), color-stop(100%, lime));
-	/* webkit */
-	
-	background: linear-gradient(to bottom, lime, green);
-}
-
-.bonbon.blau {
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, skyblue), color-stop(100%, blue));
-	/* webkit */
-	
-	background: linear-gradient(to bottom, skyblue, blue);
-}
-
-.bonbon.lila {
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, violet), color-stop(100%, purple));
-	/* webkit */
-	
-	background: linear-gradient(to bottom, hotpink, purple);
-}
-
-.bonbon:hover,
-.bonbon:focus {
-	box-shadow: rgba(0, 0, 0, 0.7) 0px 5px 15px, inset rgba(0, 0, 0, 0.15) 0px -10px 20px;
-}
 </style>
 <body>
-<form action="Daten_schreiben.php" method="post">
-  <input type="summit" name="Einschalten">
- <button class="bonbon rot">
-    Einschalten !!
- </button>
+<form action="Brandklappe1.php" method="post">
+<p> Slave-ID: <input type="text" name="ID" value="<?php echo $_POST['ID']?>"</p>
+<p> Moduladresse: <input type="text" name="modul" value="<?php echo $_POST['modul']?>"</p>
+<p> Ausgang 1 anschalten: <input type="text" name="Ausgang1" value="<?php echo $_POST['Ausgang1']?>"</p>
+  <input type="submit">
 </form>
 
 <a href="Daten_schreiben.php" target="frame">Update</a>
@@ -86,27 +40,36 @@
 
 <?php
 
+$Pfadeingang = "/home/odroid/Documents/MBWatcher_dev/Source/mb_daten/Slave";
+$Pfadeingang .= (int)$_POST['ID']; 
+$Pfadeingang = $Pfadeingang.'FC2';
 
 // Konfiguration
-$csvFile1 = "/home/odroid/Documents/MBWatcher_dev/Source/mb_daten/Slave1FC2";
-$firstRowHeader = true;
-$maxRows = 200;
- 
+$csvFile1 = "$Pfadeingang";
+$maxRows = 4;
+
 // Daten auslesen und Tabelle generieren
 $handle = fopen($csvFile1, "r");
 $counter = 0;
 echo "<table align=top border=8 cellpadding=12 border width=40% height=50 class=\"csvTable\">";
 
-echo "<h1 align=left>Ausgänge</h1>";
+echo "<h1 align=left>Eingänge</h1>";
+$Moduladdr=(int)$_POST['modul'];
+$Zeilenlaenge=9;
+$offset=($Moduladdr*4)*$Zeilenlaenge;
 
-while(($data = fgetcsv($handle, 999, ";")) && ($counter < $maxRows)) 
+fseek($handle,$offset);
+ 
+
+
+while(($data = fgetcsv($handle, 100, ";")) && ($counter < $maxRows)) 
   
 {
  
   echo "<tr>";
   echo "<tr>";
 
-  if(($counter == 0) && $firstRowHeader) 
+  if($counter == 0)
   {
     
     echo "<th align=left>".$data[0]."</th>";
@@ -131,19 +94,30 @@ echo "</table>";
 <div id="Tabelle2" class="tabelle-colour">
 
 <?php
-  
-$csvFile2 = "/home/odroid/Documents/MBWatcher_dev/Source/mb_daten/Slave6FC2";
-$firstRowHeader = true;
-$maxRows = 200;
+
+$Pfadausgang = "/home/odroid/Documents/MBWatcher_dev/Source/mb_daten/Slave";
+$Pfadausgang .= (int)$_POST['ID']; 
+$Pfadausgang = $Pfadausgang.'FC1';
+
+$csvFile2 = "$Pfadausgang";
+$firstRowHeader = false;
+$maxRows = 4;
 
 
 $handle = fopen($csvFile2, "r");
 $counter = 0;
 echo "<table align=top border=8 cellpadding=12 border width=40% height=50 class=\"csvTable\">";
 
-echo "<h1 align=left>Eingänge</h1>";
+echo "<h1 align=left>Ausgänge</h1>";
 
-while(($data = fgetcsv($handle, 999, ";")) && ($counter < $maxRows)) 
+$Moduladdr=(int)$_POST['modul'];
+$Zeilenlaenge=9;
+$offset=($Moduladdr*4)*$Zeilenlaenge;
+
+fseek($handle,$offset);
+
+
+while(($data = fgetcsv($handle, 9, ";")) && ($counter < $maxRows)) 
   
 {
  
@@ -170,9 +144,36 @@ while(($data = fgetcsv($handle, 999, ";")) && ($counter < $maxRows))
 }
 echo "</table>";
  
-?> 
+?>
+
+ 
+<?php
+
+$Pfadausgang_Write = "/home/odroid/Documents/MBWatcher_dev/Source/mb_daten/Slave";
+$Pfadausgang_Write .= (int)$_POST['ID']; 
+$Pfadausgang_Write = $Pfadausgang_Write.'FC5';
+
+$firstRowHeader = false;
+$maxRows = 4;
+$counter = 0;
+
+$handle = fopen($Pfadausgang_Write, "c+");
+
+$Moduladdr=(int)$_POST['modul'];
+$Zeilenlaenge=9;
+$offset=($Moduladdr*4)*$Zeilenlaenge;
+$Zeichenoffset=6;
+fseek($handle,$offset);
+
+while(($data = fgetcsv($handle, 9, ";")) && ($counter < $maxRows))
+{
+;
+}
+fseek($handle,$offset+$Zeichenoffset,SEEK_SET);
+fwrite ($handle,(int)$_POST['Ausgang1']);
 
 
+?>
 
 
 
