@@ -1,6 +1,5 @@
 
 <html>
-
 <head>
 <title>Log-In Wartungstool</title>
 <style type="text/css">
@@ -13,14 +12,14 @@
      background-color:#00BFFF; 
      border:6px double navy; 
      color:#F0F8FF; 
-     height:85px;
-     width:400px; 
+     height:100px;
+     width:425px; 
     }
    </style>
 </head>
 <body>
 
-<echo><b><h3>Herzlich Willkommen auf unserer Log-In Seite für das Wartungstool !!</h3></b></echo>
+<echo><b><h3 text align=center>Herzlich Willkommen auf unserer Log-In Seite für das Wartungstool !!</h3></b></echo>
 <br><br><echo><b>Bitte geben Sie ihren Benutzernamen und Passwort ein !</b></echo><br><br><br>
 
 <form action= "Zugang.php" method="post">
