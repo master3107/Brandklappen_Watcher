@@ -65,6 +65,30 @@ h1   {
   background-color:#efefef;
   border-style:solid #000000 1px;
  }
+#Ausgang1
+{
+ position:absolute;
+ left:0px; top:-280px; width:200px; height:300px;
+
+}
+#Ausgang2
+{
+ position:absolute;
+ left:0px; top:77px; width:200px; height:300px;
+
+}
+#Ausgang3
+{
+ position:absolute;
+ left:0px; top:35px; width:200px; height:300px;
+
+}
+#Ausgang4
+{
+ position:absolute;
+ left:0px; top:40px; width:200px; height:300px;
+
+}
 #Tabelle
 {
  position:absolute;
@@ -79,7 +103,7 @@ h1   {
 #Tabelle3
 {
  position:absolute;
- left:20px; top:450px; width:200px; height:300px; 
+ left:20px; top:550px; width:200px; height:300px; 
 }
 #Tabelle4
 {

@@ -16,15 +16,13 @@
 <div class="led-red"><br><br>Störung</div>
 </div></h3><br><br>
 
-
-
 <form action="Brandklappe1.php" method="post">
 <p> Slave-ID: <input type="text" name="ID" value="<?php echo $_POST['ID']?>"</p>
 <p> Moduladresse: <input type="text" name="modul" value="<?php echo $_POST['modul']?>"</p>
-<p> Ausgang 1 (on=1 / off=0): <input type="text" name="Ausgang1" value="<?php echo $_POST['Ausgang1']?>"</p>
-<p> Ausgang 2 (on=1 / off=0): <input type="text" name="Ausgang2" value="<?php echo $_POST['Ausgang2']?>"</p>
-<p> Ausgang 3 (on=1 / off=0): <input type="text" name="Ausgang3" value="<?php echo $_POST['Ausgang3']?>"</p>
-<p> Ausgang 4 (on=1 / off=0): <input type="text" name="Ausgang4" value="<?php echo $_POST['Ausgang4']?>"</p>
+<p> Ausgang 1 (on=1 / off=0): <input type="text" name="Ausgang1"</p>
+<p> Ausgang 2 (on=1 / off=0): <input type="text" name="Ausgang2"</p>
+<p> Ausgang 3 (on=1 / off=0): <input type="text" name="Ausgang3"</p>
+<p> Ausgang 4 (on=1 / off=0): <input type="text" name="Ausgang4"</p><br><br><br>
   <input type="submit">
 </form><br><br><br><br><br><br>
 
@@ -62,7 +60,6 @@ $maxRows = 4;
 $handle = fopen($csvFile1, "r");
 $counter = 0;
 echo "<table align=top border=8 cellpadding=12 border width=50% height=50 class=\"csvTable\">";
-
 $Merker = (int)$_POST['modul'];
 echo "<h3 align=left>Modul $Merker</h3>";
 $Moduladdr=(int)$_POST['modul'];
@@ -99,7 +96,6 @@ while(($data = fgetcsv($handle, 100, ";")) && ($counter < $maxRows))
   $counter++;
 }
 echo "</table>";
-
 ?>
 
 <div id="Tabelle4">
@@ -117,6 +113,7 @@ echo "<table align=top border=8 cellpadding=13 border width=50% height=60 class=
 <tr><td><font color=blue>$A3</font></td></tr>
 <tr><td><font color=blue>$A4</font></td></tr>
 </table>";
+
 
 ?>
 
@@ -176,7 +173,7 @@ echo "</table>";
 
 ?>
 
- 
+<div id="Ausgang1">
 <?php
 $Pfadausgang_Write = "/home/odroid/Documents/MBWatcher_dev/Source/mb_daten/Slave";
 $Pfadausgang_Write .= (int)$_POST['ID']; 
@@ -188,6 +185,7 @@ $counter = 0;
 
 $handle = fopen($Pfadausgang_Write, "c+");
 
+$A1=(int)$_POST['Ausgang1'];
 $Moduladdr=(int)$_POST['modul'];
 $Zeilenlaenge=9;
 $offset=($Moduladdr*4)*$Zeilenlaenge;
@@ -200,8 +198,16 @@ while(($data = fgetcsv($handle, 9, ";")) && ($counter < $maxRows))
 }
 fseek($handle,$offset+$Zeichenoffset,SEEK_SET);
 fwrite ($handle,(int)$_POST['Ausgang1']);
+if (fwrite ($handle,(int)$_POST['Ausgang1']) == FALSE & $A1=="")
+{
+echo "Speichern fehlgeschlagen !! ";
+}
+if (fwrite ($handle,(int)$_POST['Ausgang1']) != FALSE && $A1 !="")
+{
+echo "<br /><br /> Gespeichert !!";
+}
 ?>
-
+<div id="Ausgang2">
 <?php
 $Pfadausgang_Write = "/home/odroid/Documents/MBWatcher_dev/Source/mb_daten/Slave";
 $Pfadausgang_Write .= (int)$_POST['ID']; 
@@ -213,6 +219,7 @@ $counter = 0;
 
 $handle = fopen($Pfadausgang_Write, "c+");
 
+$A2=(int)$_POST['Ausgang2'];
 $Moduladdr=(int)$_POST['modul'];
 $Zeilenlaenge=9;
 $offset=($Moduladdr*4)*$Zeilenlaenge;
@@ -225,8 +232,16 @@ while(($data = fgetcsv($handle, 9, ";")) && ($counter < $maxRows))
 }
 fseek($handle,$offset+$Zeichenoffset,SEEK_SET);
 fwrite ($handle,(int)$_POST['Ausgang2']);
+if (fwrite ($handle,(int)$_POST['Ausgang2']) == FALSE & $A2=="")
+{
+echo "Speichern fehlgeschlagen !! ";
+}
+if (fwrite ($handle,(int)$_POST['Ausgang2']) != FALSE && $A2 !="")
+{
+echo "Gespeichert !!";
+}
 ?>
-
+<div id="Ausgang3">
 <?php
 $Pfadausgang_Write = "/home/odroid/Documents/MBWatcher_dev/Source/mb_daten/Slave";
 $Pfadausgang_Write .= (int)$_POST['ID']; 
@@ -238,6 +253,7 @@ $counter = 0;
 
 $handle = fopen($Pfadausgang_Write, "c+");
 
+$A3=(int)$_POST['Ausgang3'];
 $Moduladdr=(int)$_POST['modul'];
 $Zeilenlaenge=9;
 $offset=($Moduladdr*4)*$Zeilenlaenge;
@@ -250,8 +266,16 @@ while(($data = fgetcsv($handle, 9, ";")) && ($counter < $maxRows))
 }
 fseek($handle,$offset+$Zeichenoffset,SEEK_SET);
 fwrite ($handle,(int)$_POST['Ausgang3']);
+if (fwrite ($handle,(int)$_POST['Ausgang3']) == FALSE & $A3=="")
+{
+echo "Speichern fehlgeschlagen !! ";
+}
+if (fwrite ($handle,(int)$_POST['Ausgang3']) != FALSE && $A3 !="")
+{
+echo "Gespeichert !!";
+}
 ?>
-
+<div id="Ausgang4">
 <?php
 $Pfadausgang_Write = "/home/odroid/Documents/MBWatcher_dev/Source/mb_daten/Slave";
 $Pfadausgang_Write .= (int)$_POST['ID']; 
@@ -263,6 +287,7 @@ $counter = 0;
 
 $handle = fopen($Pfadausgang_Write, "c+");
 
+$A4=(int)$_POST['Ausgang4'];
 $Moduladdr=(int)$_POST['modul'];
 $Zeilenlaenge=9;
 $offset=($Moduladdr*4)*$Zeilenlaenge;
@@ -275,9 +300,19 @@ while(($data = fgetcsv($handle, 9, ";")) && ($counter < $maxRows))
 }
 fseek($handle,$offset+$Zeichenoffset,SEEK_SET);
 fwrite ($handle,(int)$_POST['Ausgang4']);
+
+if (fwrite ($handle,(int)$_POST['Ausgang4']) == FALSE & $A4=="")
+{
+echo "Speichern fehlgeschlagen !! ";
+}
+if (fwrite ($handle,(int)$_POST['Ausgang4']) != FALSE && $A4 !="")
+{
+echo "Gespeichert !!";
+}
 ?>
 
-6
+
+
 </td>
 </body>
 </html>
