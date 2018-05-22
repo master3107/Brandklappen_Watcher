@@ -11,7 +11,20 @@ h1   {
      height:40px;
      width:600px; 
      }
-
+.button3 {
+  margin-top: 0px;
+  margin-left: 0px;
+  display: inline-block;
+  padding: 15px 25px;
+  font-size: 15px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #4CAF50;
+  border: none;
+}
 .button {
   margin-top: 0px;
   margin-left: 0px;
@@ -37,8 +50,8 @@ h1   {
   transform: translateY(4px);
 }
 .button2 {
-  margin-top: 10px;
-  margin-left: 10px;
+  margin-top: -180px;
+  margin-left: 0px;
   display: inline-block;
   padding: 15px 25px;
   font-size: 15px;
@@ -103,7 +116,7 @@ h1   {
 #Tabelle3
 {
  position:absolute;
- left:20px; top:550px; width:200px; height:300px; 
+ left:20px; top:600px; width:200px; height:300px; 
 }
 #Tabelle4
 {
@@ -125,8 +138,8 @@ h1   {
 }
 
 .led-red {
-  margin-top: -60px;
-  margin-left: 35px;
+  margin-top: 23px;
+  margin-left: 25px;
   width: 24px;
   height: 24px;
   background-color: #F00;

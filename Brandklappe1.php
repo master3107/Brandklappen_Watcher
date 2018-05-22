@@ -7,24 +7,19 @@
 </head>
 <body>
 <h1 text align=center><b>Wartungstool BK-UZ</b></h1><br>
-<button class="button">Einschalten</button>
-<button class="button2">Ausschalten</button>
-<h3><div class="led-box">
-<div class="led-green"><br><br>Online</div>
-</div>
-<div class="led-box">
-<div class="led-red"><br><br>Störung</div>
-</div></h3><br><br>
+<form action="start.php">
+<input style="height: 50px; width: 150px;" type="submit" class='button' value="Einschalten">
+</form><br><br><form action="stop.php"><input type="submit" style="height: 50px; width: 150px;" class='button2' value="Ausschalten"></form><br><br>
 
 <form action="Brandklappe1.php" method="post">
-<p> Slave-ID: <input type="text" name="ID" value="<?php echo $_POST['ID']?>"</p>
-<p> Moduladresse: <input type="text" name="modul" value="<?php echo $_POST['modul']?>"</p>
-<p> Ausgang 1 (on=1 / off=0): <input type="text" name="Ausgang1"</p>
-<p> Ausgang 2 (on=1 / off=0): <input type="text" name="Ausgang2"</p>
-<p> Ausgang 3 (on=1 / off=0): <input type="text" name="Ausgang3"</p>
-<p> Ausgang 4 (on=1 / off=0): <input type="text" name="Ausgang4"</p><br><br><br>
-  <input type="submit">
-</form><br><br><br><br><br><br>
+<p><FONT SIZE="4"><b> Slave-ID:  </b></font><input type="text" name="ID" value="<?php echo $_POST['ID']?>"</p>
+<p><FONT SIZE="4"><b> Moduladresse: </b></font><input type="text" name="modul" value="<?php echo $_POST['modul']?>"</p>
+<p><FONT SIZE="4"><b> Ausgang 1 (on=1 / off=0): </b></font><input type="text" name="Ausgang1" value="<?php echo $_POST['Ausgang1']?>"</p>
+<p><FONT SIZE="4"><b> Ausgang 2 (on=1 / off=0): </b></font><input type="text" name="Ausgang2" value="<?php echo $_POST['Ausgang2']?>"</p>
+<p><FONT SIZE="4"><b> Ausgang 3 (on=1 / off=0): </b></font><input type="text" name="Ausgang3" value="<?php echo $_POST['Ausgang3']?>"</p>
+<p><FONT SIZE="4"><b> Ausgang 4 (on=1 / off=0): </b></font><input type="text" name="Ausgang4" value="<?php echo $_POST['Ausgang4']?>"</p><br><br><br>
+  <input type="submit" class='button3' value= 'Ausgabe/Ansicht-aktualisieren'>
+</form><br><br><br><br><br><br><br>
 
 <div id="Tabelle3">
 
@@ -47,7 +42,7 @@ echo "<table align=top border=8 cellpadding=13 border width=50% height=60 class=
 
 <?php
 
-$Pfadeingang = "/home/odroid/Documents/MBWatcher_dev/Source/mb_daten/Slave";
+$Pfadeingang = "/home/odroid/Documents/MBWatcher/mb_daten/Slave";
 $Pfadeingang .= (int)$_POST['ID']; 
 $Pfadeingang = $Pfadeingang.'FC2';
 
@@ -96,6 +91,7 @@ while(($data = fgetcsv($handle, 100, ";")) && ($counter < $maxRows))
   $counter++;
 }
 echo "</table>";
+fclose($handle);
 ?>
 
 <div id="Tabelle4">
@@ -121,7 +117,7 @@ echo "<table align=top border=8 cellpadding=13 border width=50% height=60 class=
 
 <?php
 
-$Pfadausgang = "/home/odroid/Documents/MBWatcher_dev/Source/mb_daten/Slave";
+$Pfadausgang = "/home/odroid/Documents/MBWatcher/mb_daten/Slave";
 $Pfadausgang .= (int)$_POST['ID']; 
 $Pfadausgang = $Pfadausgang.'FC1';
 
@@ -170,14 +166,15 @@ while(($data = fgetcsv($handle, 9, ";")) && ($counter < $maxRows))
   $counter++;
 }
 echo "</table>";
+fclose($handle);
 
 ?>
 
 <div id="Ausgang1">
 <?php
-$Pfadausgang_Write = "/home/odroid/Documents/MBWatcher_dev/Source/mb_daten/Slave";
+$Pfadausgang_Write = "/home/odroid/Documents/MBWatcher/mb_daten/Slave";
 $Pfadausgang_Write .= (int)$_POST['ID']; 
-$Pfadausgang_Write = $Pfadausgang_Write.'FC5';
+$Pfadausgang_Write = $Pfadausgang_Write.'FC15';
 
 $firstRowHeader = false;
 $maxRows = 4;
@@ -198,20 +195,13 @@ while(($data = fgetcsv($handle, 9, ";")) && ($counter < $maxRows))
 }
 fseek($handle,$offset+$Zeichenoffset,SEEK_SET);
 fwrite ($handle,(int)$_POST['Ausgang1']);
-if (fwrite ($handle,(int)$_POST['Ausgang1']) == FALSE & $A1=="")
-{
-echo "Speichern fehlgeschlagen !! ";
-}
-if (fwrite ($handle,(int)$_POST['Ausgang1']) != FALSE && $A1 !="")
-{
-echo "<br /><br /> Gespeichert !!";
-}
+fclose($handle);
 ?>
 <div id="Ausgang2">
 <?php
-$Pfadausgang_Write = "/home/odroid/Documents/MBWatcher_dev/Source/mb_daten/Slave";
+$Pfadausgang_Write = "/home/odroid/Documents/MBWatcher/mb_daten/Slave";
 $Pfadausgang_Write .= (int)$_POST['ID']; 
-$Pfadausgang_Write = $Pfadausgang_Write.'FC5';
+$Pfadausgang_Write = $Pfadausgang_Write.'FC15';
 
 $firstRowHeader = false;
 $maxRows = 4;
@@ -232,20 +222,13 @@ while(($data = fgetcsv($handle, 9, ";")) && ($counter < $maxRows))
 }
 fseek($handle,$offset+$Zeichenoffset,SEEK_SET);
 fwrite ($handle,(int)$_POST['Ausgang2']);
-if (fwrite ($handle,(int)$_POST['Ausgang2']) == FALSE & $A2=="")
-{
-echo "Speichern fehlgeschlagen !! ";
-}
-if (fwrite ($handle,(int)$_POST['Ausgang2']) != FALSE && $A2 !="")
-{
-echo "Gespeichert !!";
-}
+fclose($handle);
 ?>
 <div id="Ausgang3">
 <?php
-$Pfadausgang_Write = "/home/odroid/Documents/MBWatcher_dev/Source/mb_daten/Slave";
+$Pfadausgang_Write = "/home/odroid/Documents/MBWatcher/mb_daten/Slave";
 $Pfadausgang_Write .= (int)$_POST['ID']; 
-$Pfadausgang_Write = $Pfadausgang_Write.'FC5';
+$Pfadausgang_Write = $Pfadausgang_Write.'FC15';
 
 $firstRowHeader = false;
 $maxRows = 4;
@@ -266,20 +249,13 @@ while(($data = fgetcsv($handle, 9, ";")) && ($counter < $maxRows))
 }
 fseek($handle,$offset+$Zeichenoffset,SEEK_SET);
 fwrite ($handle,(int)$_POST['Ausgang3']);
-if (fwrite ($handle,(int)$_POST['Ausgang3']) == FALSE & $A3=="")
-{
-echo "Speichern fehlgeschlagen !! ";
-}
-if (fwrite ($handle,(int)$_POST['Ausgang3']) != FALSE && $A3 !="")
-{
-echo "Gespeichert !!";
-}
+fclose($handle);
 ?>
 <div id="Ausgang4">
 <?php
-$Pfadausgang_Write = "/home/odroid/Documents/MBWatcher_dev/Source/mb_daten/Slave";
+$Pfadausgang_Write = "/home/odroid/Documents/MBWatcher/mb_daten/Slave";
 $Pfadausgang_Write .= (int)$_POST['ID']; 
-$Pfadausgang_Write = $Pfadausgang_Write.'FC5';
+$Pfadausgang_Write = $Pfadausgang_Write.'FC15';
 
 $firstRowHeader = false;
 $maxRows = 4;
@@ -300,15 +276,7 @@ while(($data = fgetcsv($handle, 9, ";")) && ($counter < $maxRows))
 }
 fseek($handle,$offset+$Zeichenoffset,SEEK_SET);
 fwrite ($handle,(int)$_POST['Ausgang4']);
-
-if (fwrite ($handle,(int)$_POST['Ausgang4']) == FALSE & $A4=="")
-{
-echo "Speichern fehlgeschlagen !! ";
-}
-if (fwrite ($handle,(int)$_POST['Ausgang4']) != FALSE && $A4 !="")
-{
-echo "Gespeichert !!";
-}
+fclose($handle);
 ?>
 
 
